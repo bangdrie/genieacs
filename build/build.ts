@@ -114,7 +114,7 @@ async function generateBackendJs(): Promise<void> {
     target: "node12.13.0",
     packages: "external",
     banner: { js: "#!/usr/bin/env node" },
-    entryPoints: ["ui/app.ts"],
+    entryPoints: ["bin/app.ts"],
     outdir: path.join(OUTPUT_DIR, "bin"),
   });
   ASSETS.push("app.js");
@@ -170,37 +170,10 @@ async function generateIconsSprite(): Promise<void> {
   );
 }
 
-// Fungsi lain yang diperlukan
-function generateSymbol(id: string, svgStr: string): string {
-  const xml = xmlParser.parseXml(svgStr);
-  const svg = xml.children[0];
-  const svgAttrs = xmlParser.parseAttrs(svg.attrs);
-  let viewBox = "";
-  for (const a of svgAttrs) {
-    if (a.name === "viewBox") {
-      viewBox = `viewBox="${a.value}"`;
-      break;
-    }
-  }
-  const symbolBody = xml.children[0].children
-    .map((c) => xmlTostring(c))
-    .join("");
-  return `<symbol id="icon-${id}" ${viewBox}>${symbolBody}</symbol>`;
-}
-
-function xmlTostring(xml): string {
-  const children = [];
-  for (const c of xml.children || []) children.push(xmlTostring(c));
-
-  return xml.name === "root" && xml.bodyIndex === 0
-    ? children.join("")
-    : `<${xml.name} ${xml.attrs}>${children.join("")}</${xml.name}>`;
-}
-
 init()
   .then(() =>
     Promise.all([
-      Promise.all([generateIconsSprite(), copyStatic()]).then(
+            Promise.all([generateIconsSprite(), copyStatic()]).then(
         generateFrontendJs
       ),
       generateCss(),
@@ -209,4 +182,3 @@ init()
   .catch((err) => {
     process.stderr.write(err.stack + "\n");
   });
-
