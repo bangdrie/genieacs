@@ -114,7 +114,7 @@ async function generateBackendJs(): Promise<void> {
     target: "node12.13.0",
     packages: "external",
     banner: { js: "#!/usr/bin/env node" },
-    entryPoints: ["bin/app.ts"],
+    entryPoints: ["ui/app.ts"],
     outdir: path.join(OUTPUT_DIR, "bin"),
   });
   ASSETS.push("app.js");
@@ -200,8 +200,7 @@ function xmlTostring(xml): string {
 init()
   .then(() =>
     Promise.all([
-      Promise.all([generateIcons
-Sprite(), copyStatic()]).then(
+      Promise.all([generateIconsSprite(), copyStatic()]).then(
         generateFrontendJs
       ),
       generateCss(),
@@ -210,3 +209,4 @@ Sprite(), copyStatic()]).then(
   .catch((err) => {
     process.stderr.write(err.stack + "\n");
   });
+
