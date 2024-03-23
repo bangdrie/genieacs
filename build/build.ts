@@ -200,8 +200,7 @@ function xmlTostring(xml): string {
 init()
   .then(() =>
     Promise.all([
-      Promise.all([generateIcons
-Sprite(), copyStatic()]).then(
+      Promise.all([generateIconsSprite(), copyStatic()]).then(
         generateFrontendJs
       ),
       generateCss(),
