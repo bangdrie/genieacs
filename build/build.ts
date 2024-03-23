@@ -210,3 +210,4 @@ Sprite(), copyStatic()]).then(
   .catch((err) => {
     process.stderr.write(err.stack + "\n");
   });
+
