@@ -114,7 +114,7 @@ async function generateBackendJs(): Promise<void> {
     target: "node12.13.0",
     packages: "external",
     banner: { js: "#!/usr/bin/env node" },
-    entryPoints: ["bin/app.ts"],
+    entryPoints: ["ui/app.ts"],
     outdir: path.join(OUTPUT_DIR, "bin"),
   });
   ASSETS.push("app.js");
